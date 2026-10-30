@@ -4,3 +4,22 @@
 .form-languages a{display:inline-flex;align-items:center;justify-content:center;min-width:32px;height:30px;border:1px solid #d5bc80;border-radius:18px;text-decoration:none;font-size:11px;font-weight:800}
 .form-languages a.active{background:#c9a84c;color:#07152b}
 @media(max-width:500px){.form-header{flex-wrap:wrap}.form-languages{margin-left:auto}}
+
+/* V3: visible home action / intake and scheduling usability */
+.form-header-actions{display:flex;align-items:center;gap:15px;margin-left:auto}
+.form-home-link{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;border:1px solid #c9a84c;border-radius:7px;background:#fffaf0;color:#0a1c38;text-decoration:none;padding:11px 14px;font-weight:700;font-size:12px;min-height:42px}
+.form-home-link:hover,.form-home-link:focus-visible{background:#f8e8bd;outline-offset:3px}
+.form-languages{margin-left:0}
+.form-header img{width:140px;height:auto}
+#question-stage [hidden],#details-stage[hidden],#schedule-stage[hidden]{display:none!important}
+.option.selected{border-color:#c9a84c;background:#fff8e8}
+.extra-state-label{display:block;margin:18px 0 8px;font-size:13px;font-weight:700;color:#172b4b}
+#question-mount>select{width:100%;margin-bottom:16px;border:1px solid #ced5e0;background:#fff;padding:14px;border-radius:7px;color:#172b4b}
+#question-mount>.btn{margin-top:12px}
+#submit-lead:disabled{opacity:.6;cursor:wait}
+.turnstile-box{margin:18px 0;min-height:0}
+#schedule-stage .calendly-embed{min-height:650px;width:100%;max-width:100%;}
+#schedule-stage .schedule-alternative{margin-top:15px}
+#schedule-stage .schedule-alternative a{color:#805f23;text-decoration:underline}
+#schedule-stage .booking-legal-note{font-size:11px;color:#536078}
+@media(max-width:600px){.form-header{gap:10px;min-height:84px;height:auto;padding-top:8px;padding-bottom:8px}.form-header>a img{max-width:110px}.form-header-actions{gap:8px}.form-home-link{font-size:10px;padding:9px 8px;white-space:normal;line-height:1.2}.form-languages a{min-width:28px;height:28px}.form-card{width:calc(100% - 36px)}#schedule-stage .calendly-embed{min-height:700px}}

@@ -8,6 +8,20 @@
   const nav=document.getElementById('siteNav');
   btn?.addEventListener('click',()=>{const open=nav.classList.toggle('open');btn.setAttribute('aria-expanded',String(open));});
   nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');btn?.setAttribute('aria-expanded','false');}));
+  // Close expanded navigation with Escape, on outside taps, and on desktop resize.
+  document.addEventListener('keydown',e=>{if(e.key==='Escape' && nav?.classList.contains('open')) {nav.classList.remove('open');btn?.setAttribute('aria-expanded','false');btn?.focus();}});
+  document.addEventListener('pointerdown',e=>{if(nav?.classList.contains('open') && !nav.contains(e.target) && !btn?.contains(e.target)){nav.classList.remove('open');btn?.setAttribute('aria-expanded','false');}});
+  window.addEventListener('resize',()=>{if(window.innerWidth>760 && nav?.classList.contains('open')){nav.classList.remove('open');btn?.setAttribute('aria-expanded','false');}},{passive:true});
+  // Do not cover the final contact CTA or the footer with the mobile sticky button.
+  const mobileBar=document.querySelector('.mobile-action-bar');
+  if(mobileBar && 'IntersectionObserver' in window){
+    const visible=new Set();
+    const toggle=()=>mobileBar.classList.toggle('is-hidden',visible.size>0);
+    const barObserver=new IntersectionObserver(entries=>{for(const e of entries){if(e.isIntersecting)visible.add(e.target);else visible.delete(e.target);}toggle();},{threshold:.08});
+    document.querySelectorAll('#contacto, footer').forEach(el=>barObserver.observe(el));
+  }
+  const progress=document.getElementById('progress-bar');
+
   const number=(el,value)=>`${el.dataset.prefix||''}${Number(value).toFixed(Number(el.dataset.decimals||0))}${el.dataset.suffix||''}`;
   const money=(amount)=>'$'+Math.round(amount).toLocaleString('en-US');
   const tween=(el,value,formatter)=>{

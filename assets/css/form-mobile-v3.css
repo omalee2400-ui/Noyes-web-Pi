@@ -1,0 +1,33 @@
+/* V3.1 — mobile conversion refinements for the existing bilingual intake form. */
+.form-card input:focus-visible,.form-card select:focus-visible,.option:focus-visible,
+.form-card button:focus-visible,.form-home-link:focus-visible { outline:3px solid #d6ad55; outline-offset:2px; }
+.option{cursor:pointer;min-height:52px;}
+.form-card .btn{min-height:48px;cursor:pointer;}
+.form-header .form-home-link{min-height:44px;}
+@media (max-width:850px) {
+  .form-layout { display:flex;flex-direction:column; min-height:0; }
+  .form-card { order:0; width:min(100% - 36px,570px);max-width:570px;margin:0 auto; padding:30px 0 48px; }
+  .form-aside { order:1; padding:32px max(18px,calc((100% - 570px)/2)) 35px; }
+  .form-aside h1 { font-size:clamp(28px,6.4vw,36px); }
+  .form-aside>p { max-width:570px; }
+  .form-aside .aside-benefit { padding:10px 0; }
+  .form-header { min-height:74px; }
+  .form-header-actions { gap:7px; }
+  .form-card h2 { font-size:clamp(27px,6.5vw,36px); }
+  .option { min-height:55px;padding:16px;line-height:1.45; }
+  .progress { margin-bottom:26px; }
+  .form-card input:not([type=checkbox]),.form-card select,#question-mount>select { font-size:16px;min-height:48px; }
+  .form-card .form-nav { gap:10px; }
+  #submit-lead { flex:1;min-height:50px; }
+}
+@media (max-width:480px) {
+  .form-header { flex-wrap:nowrap;gap:8px; }
+  .form-header>a img { width:91px!important; max-width:91px; }
+  .form-home-link { min-width:0;max-width:135px;padding:9px 9px;font-size:10px; }
+  .form-languages a { min-width:35px;min-height:35px; }
+  .form-card { padding-top:23px; }
+  .form-card label:not(.consent) { margin-top:15px; }
+  .form-card .form-nav { flex-wrap:wrap; }
+  .form-card .form-nav .back-btn { padding:10px 4px; }
+  #schedule-stage .calendly-embed { min-height:640px; }
+}

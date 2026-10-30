@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://omalee2400-ui.github.io/Noyes-web-Pi/sitemap.xml
