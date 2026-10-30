@@ -31,3 +31,46 @@
   .form-card .form-nav .back-btn { padding:10px 4px; }
   #schedule-stage .calendly-embed { min-height:640px; }
 }
+
+
+/* V3.2 — Calendly responsive layout (no copy, SEO or form logic changes).
+   Calendly's injected iframe uses percentage height, so min-height alone
+   is insufficient: its parent needs an explicit height. */
+@media (min-width: 851px) {
+  .form-layout:has(#schedule-stage:not([hidden])) .form-card {
+    width: calc(100% - 56px);
+    max-width: 920px;
+  }
+}
+#schedule-stage #calendly-embed {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  height: 780px;
+  min-height: 780px;
+  margin: 22px auto 0;
+}
+#schedule-stage #calendly-embed iframe {
+  display: block !important;
+  box-sizing: border-box;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 780px !important;
+  border: 0;
+}
+@media (min-width: 601px) and (max-width: 850px) {
+  #schedule-stage #calendly-embed {
+    height: 860px;
+    min-height: 860px;
+  }
+  #schedule-stage #calendly-embed iframe { min-height: 860px !important; }
+}
+@media (max-width: 600px) {
+  #schedule-stage #calendly-embed {
+    height: 960px;
+    min-height: 960px;
+    margin-top: 18px;
+  }
+  #schedule-stage #calendly-embed iframe { min-height: 960px !important; }
+}

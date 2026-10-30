@@ -31,7 +31,6 @@
 .carousel-arrow{height:43px;width:43px;border-radius:50%;border:1px solid #bfa05e;background:#132c4b;color:#f0cc73;font-size:30px;line-height:1;cursor:pointer;transition:background .2s,transform .2s}
 .carousel-arrow:not(:disabled):hover{background:#234366;transform:translateY(-2px)}
 .carousel-arrow:disabled{opacity:.35;cursor:default}
-.carousel-status{color:#d1d8e7;min-width:66px;text-align:center;font-size:12px;font-weight:600}
 .cta-stagger{transition:opacity .7s ease,transform .7s ease}
 .js-motion .reveal:not(.visible){opacity:0;transform:translateY(19px)}
 .js-motion .problem-card.reveal:not(.visible){transform:translateY(22px)}
@@ -94,3 +93,22 @@ button:focus-visible,a:focus-visible,.testimonial-track:focus-visible{outline:3p
 .testimonial-author-meta{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
 .testimonial-client-type{display:block;color:#d8b368;font-size:11px;font-weight:600;line-height:1.4}
 .carousel-disclosure{color:#c0cad8;font-size:11px;line-height:1.6;text-align:center;margin:12px 0 0}
+
+/* Navigation: arrows only; keep generous spacing and 44px touch targets. */
+.carousel-controls{gap:clamp(28px,5vw,64px)}
+.carousel-arrow{min-height:44px;min-width:44px}
+
+/* Privacy policy: readable, accessible layout in both languages */
+.policy-updated{font-size:12px;font-weight:600;color:#667589;margin:-24px 0 26px}
+.policy-toc{padding:20px 22px;border:1px solid #e2dccb;border-radius:14px;background:#fff;margin:20px 0 32px}
+.policy-toc>strong{display:block;color:#a77e35;letter-spacing:.13em;font-size:11px;margin-bottom:14px}
+.policy-toc-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 24px}
+.policy-toc-links a{color:#1a4165;text-decoration:underline;text-decoration-color:#b7a374;text-underline-offset:3px;font-size:12px;line-height:1.65}
+.policy-content section{scroll-margin-top:24px}
+.policy-content section h2{line-height:1.32}
+.policy-content section p{font-size:14px;line-height:1.85}
+.policy-content section ul{margin:10px 0 18px 23px;padding:0;color:#425571;font-size:14px;line-height:1.85}
+.policy-content section li{padding-left:4px;margin-bottom:8px}
+.policy-content section a{color:#194c7d;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}
+.policy-content section a:focus-visible,.policy-toc-links a:focus-visible{outline:3px solid #c9a84c;outline-offset:3px}
+@media(max-width:680px){.policy-toc-links{grid-template-columns:1fr}.policy-main{padding:34px 0 58px}.policy-content section{padding:24px 0}.policy-content section p,.policy-content section ul{font-size:14px}.policy-updated{margin-top:-13px}}

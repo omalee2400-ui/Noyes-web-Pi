@@ -56,7 +56,7 @@
   }
   const track=document.getElementById('testimonialTrack');
   if(track){
-    const prev=document.querySelector('[data-carousel="prev"]'),next=document.querySelector('[data-carousel="next"]'),status=document.querySelector('.carousel-status');
+    const prev=document.querySelector('[data-carousel="prev"]'),next=document.querySelector('[data-carousel="next"]');
     const cards=Array.from(track.querySelectorAll('.testimonial-card'));
     const perView=()=>window.innerWidth<=760?1:window.innerWidth<=990?2:3;
     const gap=()=>parseFloat(getComputedStyle(track).columnGap)||20;
@@ -65,7 +65,6 @@
       const index=current(),per=perView();
       if(prev)prev.disabled=index<=0;
       if(next)next.disabled=index>=cards.length-per;
-      if(status)status.textContent=`${index+1}–${Math.min(cards.length,index+per)} / ${cards.length}`;
     };
     const go=dir=>{
       const index=Math.min(Math.max(0,current()+dir),cards.length-perView());
@@ -73,7 +72,12 @@
       window.setTimeout(update,400);
     };
     prev?.addEventListener('click',()=>go(-1));next?.addEventListener('click',()=>go(1));
-    track.addEventListener('scroll',()=>requestAnimationFrame(update),{passive:true});
+    let scrollQueued=false;
+    track.addEventListener('scroll',()=>{
+      if(scrollQueued)return;
+      scrollQueued=true;
+      requestAnimationFrame(()=>{scrollQueued=false;update();});
+    },{passive:true});
     track.addEventListener('keydown',e=>{if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();go(e.key==='ArrowLeft'?-1:1);}});
     window.addEventListener('resize',update,{passive:true});update();
   }
