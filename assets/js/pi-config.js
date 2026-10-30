@@ -4,7 +4,7 @@
  * https://yxwbxlsjglutlgfqybxb.supabase.co/functions/v1/submit-pi-lead
  */
 window.NOYES_PI_CONFIG = Object.freeze({
-  enabled: false,
+  enabled: true,
   endpoint: 'https://yxwbxlsjglutlgfqybxb.supabase.co/functions/v1/submit-pi-lead',
   turnstileSiteKey: '0x4AAAAAAFrk78W-Ny-Cr7tW',
   calendlyUrl: 'https://calendly.com/omar-noyesassociateslaw/30min'
