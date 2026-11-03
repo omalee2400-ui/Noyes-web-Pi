@@ -1,0 +1,27 @@
+NOYES & ASSOCIATES | PERSONAL INJURY — V4
+Preparada desde el ZIP de GitHub de la rama Actualizacion-V3 (2 nov 2026).
+
+CONTENIDO
+Este ZIP es una COPIA COMPLETA de la carpeta raíz del sitio.
+Archivos modificados respecto a V3.1:
+- index.html: estrellas en reseñas 4–6; retirada la frase de imágenes ilustrativas.
+- en/index.html: los mismos cambios de estrellas y aclaración en inglés.
+- privacidad/index.html: política ES aprobada, con logo blanco.
+- en/privacy/index.html: política EN aprobada, con logo blanco.
+- assets/images/logo-policy-white.png: logo blanco suministrado (recorte de márgenes transparentes).
+
+SIN CAMBIOS: form.js, pi-config.js, premium.js, formularios, Calendly, Turnstile y Supabase.
+No contiene Pixel ni CAPI y no altera el acceso a Calendly.
+
+PUBLICACIÓN
+1. Usa GitHub Desktop en la rama Actualizacion-V3.
+2. Extrae el ZIP. ABRE la carpeta Noyes-web-Pi-Actualizacion-V3 que está DENTRO del ZIP.
+3. Copia su CONTENIDO sobre los archivos del repositorio (no la carpeta exterior).
+4. Verifica que GitHub Desktop muestre SOLO estos 5 cambios (dos index raíz, dos index de privacidad y la imagen nueva).
+5. Revisa los diffs, crea commit 'V4 - testimonios y privacidad ES EN', y Push origin.
+6. Comprueba la landing ES/EN, las 6 estrellas por testimonial, la política y el formulario en GitHub Pages.
+
+NOTA DE PRIVACIDAD
+La sección de publicidad describe integración futura; al habilitar Pixel/CAPI
+habrá que actualizar ese texto y comprobar aviso/consentimiento aplicable.
+Los nombres abreviados y la nota sobre resultados anteriores continúan visibles.
