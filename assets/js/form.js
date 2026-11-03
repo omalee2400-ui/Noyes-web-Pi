@@ -5,6 +5,24 @@
 'use strict';
 const en=document.documentElement.lang.toLowerCase().startsWith('en');
 const config=window.NOYES_PI_CONFIG||{};
+// Internal campaign attribution only. Never send UTM data to Meta from here.
+// Use the evaluation URL first; fall back to the same-origin referring page
+// when a visitor follows a normal link from the landing to /evaluacion/.
+function getCampaign(){
+ const accepted=value=>typeof value==='string' && value.length<=80 && /^[A-Za-z0-9_.-]+$/.test(value)?value:null;
+ try{
+  const current=new URL(window.location.href);
+  if(current.searchParams.has('utm_campaign'))return accepted(current.searchParams.get('utm_campaign'));
+  if(document.referrer){
+   const previous=new URL(document.referrer);
+   if(previous.origin===current.origin && previous.searchParams.has('utm_campaign')){
+    return accepted(previous.searchParams.get('utm_campaign'));
+   }
+  }
+ }catch{/* Missing or malformed URL: form remains functional without attribution. */}
+ return null;
+}
+const campaign=getCampaign();
 const questionsES=[
  {id:'accidentType',title:'¿Qué tipo de accidente sufriste?',options:['Accidente de auto','Accidente de camión o motocicleta','Caída o resbalón','Accidente laboral','Otro']},
  {id:'state',title:'¿Dónde ocurrió el accidente?',options:['En Connecticut','En otro estado']},
@@ -95,7 +113,7 @@ form.addEventListener('submit',async event=>{
  try{
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   let result;
-  try {result=await fetch(config.endpoint,{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({submissionId,fullName:name,phone,email,preferredLanguage:document.getElementById("language").value,consent:document.getElementById("consent").checked,accidentType:answers.accidentType,state:answers.state,otherState:answers.otherState||null,when:answers.when,injury:answers.injury,turnstileToken:captchaToken,source:'pi_landing'}),signal:controller.signal});}finally{clearTimeout(timeout);}
+  try {result=await fetch(config.endpoint,{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({submissionId,fullName:name,phone,email,preferredLanguage:document.getElementById("language").value,consent:document.getElementById("consent").checked,accidentType:answers.accidentType,state:answers.state,otherState:answers.otherState||null,when:answers.when,injury:answers.injury,turnstileToken:captchaToken,source:'pi_landing',campaign}),signal:controller.signal});}finally{clearTimeout(timeout);}
   let payload;try{payload=await result.json();}catch{throw Error('invalid_server_response');}
   if(!result.ok||!payload.success||payload.nextStep!=='schedule_appointment'||typeof payload.bookingToken!=='string')throw Error(payload.error||'save_failed');
   saved=true;bookingToken=payload.bookingToken;
