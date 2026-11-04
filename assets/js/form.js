@@ -5,6 +5,10 @@
 'use strict';
 const en=document.documentElement.lang.toLowerCase().startsWith('en');
 const config=window.NOYES_PI_CONFIG||{};
+// UTM information is kept locally for first-party attribution in Supabase.
+// The token used by Calendly is separate from the advertising UTMs.
+const attribution=window.NOYES_PI_ATTRIBUTION||{};
+const campaign=attribution.utm_campaign||null;
 const questionsES=[
  {id:'accidentType',title:'¿Qué tipo de accidente sufriste?',options:['Accidente de auto','Accidente de camión o motocicleta','Caída o resbalón','Accidente laboral','Otro']},
  {id:'state',title:'¿Dónde ocurrió el accidente?',options:['En Connecticut','En otro estado']},
@@ -75,7 +79,13 @@ async function showSchedule(name,email){
  progress(100,say('Paso 3 de 3 · Agenda tu llamada','Step 3 of 3 · Schedule your call'));
  document.getElementById('schedule-name').textContent=name;
  const loading=document.getElementById('calendar-loading');loading.hidden=false;
- const fallback=document.getElementById('calendar-fallback');fallback.href=config.calendlyUrl;
+ const fallback=document.getElementById('calendar-fallback');
+ // Maintain the existing booking-token handoff if the iframe fails to load.
+ const fallbackUrl=new URL(config.calendlyUrl);
+ fallbackUrl.searchParams.set('utm_source','noyes_pi_landing');
+ fallbackUrl.searchParams.set('utm_medium','website');
+ fallbackUrl.searchParams.set('utm_content',bookingToken);
+ fallback.href=fallbackUrl.toString();
  try{
   await loadScript('https://assets.calendly.com/assets/external/widget.js');
   if(!window.Calendly?.initInlineWidget)throw Error('calendly_missing');
@@ -95,7 +105,7 @@ form.addEventListener('submit',async event=>{
  try{
   const controller=new AbortController();const timeout=setTimeout(()=>controller.abort(),15000);
   let result;
-  try {result=await fetch(config.endpoint,{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({submissionId,fullName:name,phone,email,preferredLanguage:document.getElementById("language").value,consent:document.getElementById("consent").checked,accidentType:answers.accidentType,state:answers.state,otherState:answers.otherState||null,when:answers.when,injury:answers.injury,turnstileToken:captchaToken,source:'pi_landing'}),signal:controller.signal});}finally{clearTimeout(timeout);}
+  try {result=await fetch(config.endpoint,{method:'POST',mode:'cors',credentials:'omit',headers:{'Content-Type':'application/json'},body:JSON.stringify({submissionId,fullName:name,phone,email,preferredLanguage:document.getElementById("language").value,consent:document.getElementById("consent").checked,accidentType:answers.accidentType,state:answers.state,otherState:answers.otherState||null,when:answers.when,injury:answers.injury,turnstileToken:captchaToken,source:'pi_landing',campaign,utm_source:attribution.utm_source||null,utm_medium:attribution.utm_medium||null,utm_content:attribution.utm_content||null}),signal:controller.signal});}finally{clearTimeout(timeout);}
   let payload;try{payload=await result.json();}catch{throw Error('invalid_server_response');}
   if(!result.ok||!payload.success||payload.nextStep!=='schedule_appointment'||typeof payload.bookingToken!=='string')throw Error(payload.error||'save_failed');
   saved=true;bookingToken=payload.bookingToken;

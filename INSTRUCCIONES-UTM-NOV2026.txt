@@ -1,0 +1,33 @@
+NOYES & ASOCIADOS — PERSONAL INJURY | UTM / LANDING
+Actualización para la rama de pruebas utm-tracking — 3 de noviembre de 2026.
+
+Cambios:
+- Nuevo assets/js/utm-tracking.js: captura UTM allowlist (source, medium,
+  campaign, content), conserva parámetros al navegar y cambiar ES/EN.
+- assets/js/form.js: envía los tres UTM adicionales a la Edge Function,
+  manteniendo campaign y source. Conserva bookingToken exclusivamente para
+  la vinculación con Calendly.
+- Fallback de Calendly: incluye el bookingToken cuando se abre otra pestaña.
+- index.html, en/index.html y ambos formularios: cargan el helper compartido.
+- No se agregó Meta Pixel, Conversions API, cookies de publicidad ni envíos
+  de respuestas sensibles del cuestionario hacia Meta.
+
+IMPORTANTE: No sustituir directamente la web en producción sin probar.
+1. Subir a la rama de PRUEBAS (utm-tracking), conservando las rutas del ZIP.
+2. Abrir home con ?utm_source=facebook&utm_medium=paid_social&utm_campaign=pi_ct_nov&utm_content=video_01
+3. Ir a Evaluación; verificar que los cuatro parámetros permanezcan en URL.
+4. Cambiar a EN; comprobar que permanezcan en URL.
+5. Enviar UN formulario de prueba con Turnstile en el dominio autorizado.
+   Confirmar que Supabase recibe campaign, utm_source, utm_medium y utm_content.
+6. Completar UNA reserva de prueba y verificar conciliación Calendly/SQL;
+   limpiar los registros de prueba de forma autorizada.
+7. Revisar el banner y texto de privacidad y las restricciones del dataset de Meta
+   antes de añadir cualquier tecnología de publicidad.
+
+NOTAS:
+- La atribución no usa cookies ni sessionStorage: permanece en la URL durante
+  la navegación interna (y se recupera del referrer del mismo origen).
+- Si el usuario abandona el sitio y regresa sin UTM, no se atribuye la visita
+  al anuncio anterior. Esta es una limitación intencional del enfoque.
+- No se puede confirmar el funcionamiento del deployment solo con el ZIP:
+  las pruebas reales deben hacerse contra la Edge Function desplegada.
